@@ -1,0 +1,1 @@
+enum Names {physical, magic}
