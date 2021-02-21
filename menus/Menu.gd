@@ -8,6 +8,7 @@ var menu_item_current = 0
 var base_menu_item_action = null
 
 var overlord 
+var key_master
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -17,6 +18,7 @@ var overlord
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	overlord = get_parent().get_parent() #got to be a better way...
+	key_master = overlord.get_node("KeyMaster")
 	print(overlord.characters)
 	for i in range(0, menu_item_names.size()):
 		var menu_item_name = menu_item_names[i]
@@ -54,17 +56,17 @@ func inst_menu_item(text, x, y):
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
 	if overlord.active_menu == self:
-		if Input.is_action_just_pressed("ui_up"):
+		if key_master.key_pressed("ui_up"):
 			menu_item_current -= 1
 			if menu_item_current < 0:
 				menu_item_current = menu_items.size() - 1
 			menu_item_set_current()	
-		if Input.is_action_just_pressed("ui_down"):
+		if key_master.key_pressed("ui_down"):
 			menu_item_current += 1
 			if menu_item_current > menu_items.size() - 1:
 				menu_item_current = 0
 			menu_item_set_current()	
-		if Input.is_action_just_pressed("ui_accept"):
+		if key_master.key_pressed("ui_accept"):
 			var menu_item_action = get_node('MenuItem' + menu_item_names[menu_item_current])
 			if menu_item_action != null:
 				menu_item_action.execute()
@@ -72,3 +74,6 @@ func _process(_delta):
 				base_menu_item_action.execute()
 			else:
 				print("INVALID ACTION")
+
+func _on_KeyMaster_signal_ui_key(key_name):
+	pass

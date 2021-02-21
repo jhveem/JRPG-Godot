@@ -1,6 +1,7 @@
 extends Control
 
 var overlord 
+var key_master
 var skill
 var target_menu_current = 'player'
 var menu_item_current = 0
@@ -13,6 +14,7 @@ var menu_item_current = 0
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	overlord = get_parent().get_parent()
+	key_master = overlord.get_node("KeyMaster")
 	print(overlord.characters)
 
 
@@ -33,24 +35,25 @@ func menu_item_select(_menu_item_number=menu_item_current):
 func _process(_delta):
 	if overlord.active_menu == self:
 		if target_menu_current != '':
-			if Input.is_action_just_pressed("ui_left"):
+			if key_master.key_pressed("ui_left"):
 				target_menu_current = 'enemy'
 				menu_item_set_current(0)	
-			if Input.is_action_just_pressed("ui_right"):
+			if key_master.key_pressed("ui_right"):
 				target_menu_current = 'player'
 				menu_item_set_current(0)	
-			if Input.is_action_just_pressed("ui_up"):
+			if key_master.key_pressed("ui_up"):
 				menu_item_current -= 1
 				if menu_item_current < 0:
 					menu_item_current = overlord.characters[target_menu_current].size() - 1
 				menu_item_set_current()	
-			if Input.is_action_just_pressed("ui_down"):
+			if key_master.key_pressed("ui_down"):
 				menu_item_current += 1
 				if menu_item_current > overlord.characters[target_menu_current].size() - 1:
 					menu_item_current = 0
 				menu_item_set_current()	
-			if Input.is_action_just_pressed("ui_accept"):
+			if key_master.key_pressed("ui_accept"):
 				var targets = get_selected_targets()
+				reset_selected_targets()
 				skill.use(targets)
 
 func get_selected_targets():

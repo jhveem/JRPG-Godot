@@ -2,7 +2,7 @@ extends Node
 
 var stats = {
 	'health': 50,
-	'mana': 20,
+	'mana': 10,
 	'strength': 2,
 	'magic': 10,
 	'defense': 5,
@@ -16,7 +16,7 @@ var stats = {
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	print("READY")
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

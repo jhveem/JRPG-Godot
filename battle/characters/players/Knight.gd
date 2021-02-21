@@ -1,6 +1,6 @@
 extends "res://battle/characters/BaseCharacter.gd" 
 
-func _ready():
+func _init():
     stats = {
         'health': 80,
         'mana': 10,
@@ -9,4 +9,3 @@ func _ready():
         'defense': 5,
         'speed': 4
     }
-    ._ready()

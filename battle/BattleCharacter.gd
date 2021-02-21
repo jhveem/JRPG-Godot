@@ -1,11 +1,16 @@
 extends Area2D
-var character_name
-var character_stats
-var character_stats_current
-var character_party = ''
+var character = {
+	'name': '',
+	'stats_base': {},
+	'stats': {},
+	'party': ''
+}  
+var start_x = 0
+var start_y = 0
 var current_turn_tick = 0
 var turn_tick_max = 100
 var selected = false
+var battle_overlord
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -16,15 +21,20 @@ var selected = false
 func _ready():
 	pass # Replace with function body.
 
-func init(_name, _path, _party):
-	character_name = _name
-	var character = load("res://battle/characters/" + _path + ".gd").new();
-	character_stats = str2var(var2str(character.stats))
-	character_stats_current = str2var(var2str(character.stats))
-	character_party = _party
+func init(_name, _path, _party, _x, _y):
+	character.name = _name
+	var character_info = load("res://battle/characters/" + _path + ".gd").new();
+	character_info._init()
+	character.stats_base = str2var(var2str(character_info.stats))
+	character.stats = str2var(var2str(character_info.stats))
+	character.party = _party
+	start_x = _x
+	start_y = _y
+	position.x = _x
+	position.y = _y
 	
 func turn_tick():
-	var speed = character_stats['speed']
+	var speed = character.stats['speed']
 	var rand = rand_range(0, speed) * .25
 	var tick_rate = speed + rand #modify this later to include all the factors
 	current_turn_tick += tick_rate
@@ -32,6 +42,17 @@ func turn_tick():
 		current_turn_tick -= turn_tick_max
 		return true
 	return false
+
+func toggle_active():
+	if battle_overlord.active_character == self:
+		var w = (ProjectSettings.get_setting("display/window/size/width"))
+		if start_x > w / 2:
+			position.x = start_x - 8
+		else:
+			position.x = start_x + 8
+	else:
+		position.x = start_x
+
 
 func toggle_selected(_selected=!selected):
 	selected = _selected 
@@ -41,16 +62,16 @@ func toggle_selected(_selected=!selected):
 		$Selector.hide()
 
 func modify_stat(stat, value):
-	character_stats_current[stat] += value
-	if (character_stats_current[stat]) < 0:
-		character_stats_current[stat] = 0
-	print(character_stats_current)
+	character.stats[stat] += value
+	if (character.stats[stat]) < 0:
+		character.stats[stat] = 0
 	if stat == 'health':
-		print(character_stats[stat])
-		print(character_stats_current[stat])
-		var perc = float(character_stats_current[stat]) / float(character_stats[stat]) * 100
-		print(perc)
+		var perc = float(character.stats[stat]) / float(character.stats_base[stat]) * 100
 		$HealthBar.set_value(perc)
+
+func end_turn():
+	battle_overlord.turn_tick()
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
