@@ -5,18 +5,17 @@ export(float, 10, 150, 5) var power = 50
 export(float, .1, 1.5, .1) var damage_multiplier = 1
 
 func use(targets):
-	print(user.character_stats.strength)
 	for target in  targets:
+		print(target.character.stats)
 		var damage = calc_damage(user, target)
 		target.modify_stat('health', -damage)
-		
+	.end()
+
 func calc_damage(user, target):
 	var total_power = float(power)
 	var damage = 0.0
-	print(user.character_stats)
-	var strength = float(user.character_stats.strength)
-	var defense = float(target.character_stats.defense)
-	print("DEFENSE", defense)
+	var strength = float(user.character.stats.strength)
+	var defense = float(target.character.stats.defense)
 	if type == SKILL_TYPES.Names.physical:
 		#if physical, pull in weapon info
 		var weapon_power = float(10)
