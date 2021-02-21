@@ -26,13 +26,11 @@ func execute(): #for menu use
 	menu.overlord.set_active_menu(menu.overlord.get_node('MenuOverlord/TargetMenu'), self)
 
 func use(targets):
-	print("USE SKILL")
 	for target in targets:
 		print(target)
 	end()	
 
 func end():
-	print("END SKILL")
 	user.end_turn()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

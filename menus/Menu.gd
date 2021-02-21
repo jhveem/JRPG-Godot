@@ -19,7 +19,6 @@ var key_master
 func _ready():
 	overlord = get_parent().get_parent() #got to be a better way...
 	key_master = overlord.get_node("KeyMaster")
-	print(overlord.characters)
 	for i in range(0, menu_item_names.size()):
 		var menu_item_name = menu_item_names[i]
 		var menu_item = inst_menu_item(menu_item_name, 0, i * 10)

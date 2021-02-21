@@ -15,7 +15,6 @@ var menu_item_current = 0
 func _ready():
 	overlord = get_parent().get_parent()
 	key_master = overlord.get_node("KeyMaster")
-	print(overlord.characters)
 
 
 #called by menu items that are opening the target menu

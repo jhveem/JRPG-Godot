@@ -12,10 +12,10 @@ var active_character
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	randomize()
-	load_character('knight', 'players/Knight', 68, 48, 'enemy')
-	load_character('knight 2', 'players/Knight', 252, 48, 'player')
-	load_character('wizard 1', 'players/Wizard', 252, 80, 'player')
-	load_character('wizard 2', 'players/Wizard', 252, 112, 'player')
+	load_character('knight', 'Tophat', 'players/Knight', 68, 48, 'enemy')
+	load_character('knight 2', 'Knight', 'players/Knight', 252, 48, 'player')
+	load_character('wizard 1', 'Wizard', 'players/Wizard', 252, 80, 'player')
+	load_character('wizard 2', 'Wizard', 'players/Wizard', 252, 112, 'player')
 
 	active_menu = $MenuOverlord/ActionMenu
 	
@@ -65,10 +65,10 @@ func turn_tick():
 	active_menu = $MenuOverlord/ActionMenu
 	print(active_character.character.name)
 
-func load_character(name, path, x, y, party):
+func load_character(name, character_name, path, x, y, party):
 	var character_scene = load("res://battle/BattleCharacter.tscn")
 	var character_inst = character_scene.instance()
 	characters[party].append(character_inst)
 	character_inst.battle_overlord = self
-	character_inst.init(name, path, party, x, y)
+	character_inst.init(name, character_name, path, party, x, y)
 	add_child(character_inst)

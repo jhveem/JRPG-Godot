@@ -35,16 +35,17 @@ animations = [ {
 script = ExtResource( 2 )
 
 [node name="Selector" type="AnimatedSprite" parent="."]
-visible = false
-position = Vector2( -4, 4 )
+position = Vector2( -24, 8 )
 scale = Vector2( 0.5, 0.5 )
 frames = SubResource( 1 )
 animation = "active"
 
 [node name="HealthBar" type="TextureProgress" parent="."]
-margin_top = 16.0
-margin_right = 16.0
-margin_bottom = 18.0
+margin_left = -8.0
+margin_top = 32.0
+margin_right = 8.0
+margin_bottom = 34.0
+rect_scale = Vector2( 2, 1 )
 step = 0.1
 value = 100.0
 texture_under = ExtResource( 5 )
@@ -56,7 +57,7 @@ __meta__ = {
 [node name="Sprites" type="Node2D" parent="."]
 
 [node name="Base" type="AnimatedSprite" parent="Sprites"]
-position = Vector2( 8, 0 )
+position = Vector2( 8, 8 )
 frames = SubResource( 2 )
 animation = "idle"
 __meta__ = {
@@ -64,5 +65,10 @@ __meta__ = {
 }
 
 [node name="Tophat" type="AnimatedSprite" parent="Sprites"]
+visible = false
+position = Vector2( 8, 0 )
 frames = SubResource( 3 )
 animation = "idle"
+__meta__ = {
+"_edit_group_": true
+}

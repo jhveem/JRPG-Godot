@@ -1,6 +1,7 @@
 extends Area2D
 var character = {
 	'name': '',
+	'character_name': '',
 	'stats_base': {},
 	'stats': {},
 	'party': ''
@@ -11,6 +12,7 @@ var current_turn_tick = 0
 var turn_tick_max = 100
 var selected = false
 var battle_overlord
+onready var sprite = $Sprites/Base
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -21,13 +23,18 @@ var battle_overlord
 func _ready():
 	pass # Replace with function body.
 
-func init(_name, _path, _party, _x, _y):
+func init(_name, _character_name, _path, _party, _x, _y):
 	character.name = _name
 	var character_info = load("res://battle/characters/" + _path + ".gd").new();
 	character_info._init()
 	character.stats_base = str2var(var2str(character_info.stats))
 	character.stats = str2var(var2str(character_info.stats))
 	character.party = _party
+	var _sprite = get_node_or_null("Sprites/" + _character_name);
+	if (_sprite != null):
+		sprite = _sprite
+		sprite.show()
+		$Sprites/Base.hide()
 	start_x = _x
 	start_y = _y
 	position.x = _x
